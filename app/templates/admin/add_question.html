@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Question</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: #eef1f7;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 600px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h3 class="text-center"><i class="fas fa-plus"></i> Add Question</h3>
+
+    <form method="POST" action="{{ url_for('admin_bp.add_question', quiz_id=quiz_id) }}">
+        <input type="hidden" name="quiz_id" value="{{ quiz_id }}">
+
+        <!-- Question Text -->
+        <div class="mb-3">
+            <label for="question" class="form-label">Question</label>
+            <textarea class="form-control" id="question" name="question_text" rows="3" required></textarea>
+        </div>
+
+        <!-- Options -->
+        <div class="mb-3">
+            <label class="form-label">Options</label>
+            
+            <div class="input-group mb-2">
+                <div class="input-group-text">
+                    <input type="radio" name="correct_option" value="0" required>
+                </div>
+                <input type="text" class="form-control" name="option_text[]" placeholder="Option A" required>
+            </div>
+
+            <div class="input-group mb-2">
+                <div class="input-group-text">
+                    <input type="radio" name="correct_option" value="1">
+                </div>
+                <input type="text" class="form-control" name="option_text[]" placeholder="Option B" required>
+            </div>
+
+            <div class="input-group mb-2">
+                <div class="input-group-text">
+                    <input type="radio" name="correct_option" value="2">
+                </div>
+                <input type="text" class="form-control" name="option_text[]" placeholder="Option C" required>
+            </div>
+
+            <div class="input-group mb-2">
+                <div class="input-group-text">
+                    <input type="radio" name="correct_option" value="3">
+                </div>
+                <input type="text" class="form-control" name="option_text[]" placeholder="Option D" required>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Question</button>
+            <a href="{{ url_for('admin_bp.manage_questions', quiz_id=quiz_id) }}" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
