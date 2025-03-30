@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Summary</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f6f9; font-family: 'Arial', sans-serif; text-align: center; }
+        .container { max-width: 900px; margin: auto; padding-top: 30px; }
+        h1 { color: #007bff; font-weight: bold; margin-bottom: 30px; }
+        .chart-container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-bottom: 20px; }
+        .chart-container img { max-width: 100%; border-radius: 8px; }
+        .chart-container h3 { color: #333; font-weight: bold; margin-bottom: 15px; }
+        .back-button { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s ease; }
+        .back-button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Summary</h1>
+
+        <div class="chart-container">
+            <h3>Top Scores in Subjects</h3>
+            
+            <img src="data:image/png;base64,{{ subject_chart }}" alt="Top Scores by Subject">
+        </div>
+
+        <div class="chart-container">
+            <h3>Average Scores in Chapters</h3>
+           
+            <img src="data:image/png;base64,{{ chapter_chart }}" alt="Average Scores by Chapter">
+        </div>
+
+        <div class="chart-container">
+            <h3>Average Quiz Scores</h3>
+            
+            <img src="data:image/png;base64,{{ quiz_chart }}" alt="Average Scores by Quiz">
+        </div>
+
+        <div class="chart-container">
+            <h3>Subject-wise Quiz Attempts</h3>
+            
+            <img src="data:image/png;base64,{{ attempts_chart }}" alt="Quiz Attempts by Subject">
+        </div>
+
+        <a href="{{ url_for('admin_bp.admin_dashboard') }}" class="back-button">Back to Admin Dashboard</a>
+    </div>
+</body>
+</html>
