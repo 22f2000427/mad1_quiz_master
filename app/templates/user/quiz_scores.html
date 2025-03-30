@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Scores</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        
+        body {
+            background: linear-gradient(135deg, #1c1c1c, #2a2a2a, #3b3b3b);
+            color: #eaeaea;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        
+        .glass-container {
+            background: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        
+        .btn {
+            transition: all 0.3s ease-in-out;
+            border-radius: 50px;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: #6b52ae;
+            border: none;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #553d87;
+        }
+
+        .btn-outline-primary {
+            border-color: #8a4baf;
+            color: #8a4baf;
+        }
+
+        .btn-outline-primary:hover {
+            background: #8a4baf;
+            color: white;
+        }
+
+        
+        .table {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 10px;
+        }
+        .table th {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        
+        .score-green { color: #2ecc71; font-weight: bold; }  /* Perfect Score */
+        .score-red { color: #e74c3c; font-weight: bold; }    /* Zero Score */
+        .score-orange { color: #f39c12; font-weight: bold; } /* Mid Score */
+    </style>
+</head>
+<body>
+
+    
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold"><i class="fas fa-chart-line"></i> Your Quiz Scores</h2>
+            <a href="{{ url_for('user_bp.user_dashboard') }}" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+
+        
+        <div class="glass-container">
+            <form method="GET" action="{{ url_for('user_bp.quiz_scores') }}" class="input-group mb-4">
+                <input type="text" name="search" class="form-control" placeholder="🔍 Search by Quiz Title" value="{{ request.args.get('search', '') }}">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+            </form>
+        </div>
+
+        
+        <div class="glass-container mt-4">
+            <div class="table-responsive">
+                <table class="table table-hover text-white text-center">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Quiz Title</th>
+                            <th>Date Attempted</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for attempt, quiz in attempts %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td class="fw-bold text-primary">{{ quiz.title }}</td>
+                            <td>{{ attempt.date_attempted.strftime('%d/%m/%Y') }}</td>
+                            <td class="{% if attempt.score == quiz.num_questions %}score-green{% elif attempt.score == 0 %}score-red{% else %}score-orange{% endif %}">
+                                {{ attempt.score }}{% if quiz.num_questions %} / {{ quiz.num_questions }}{% endif %}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" class="text-center text-muted fw-bold">No quiz attempts found. Try taking a quiz! 📚</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
